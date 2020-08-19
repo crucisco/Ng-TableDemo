@@ -1,0 +1,41 @@
+<h2>Users</h2>
+<p *ngIf="errorMessage">{{errorMessage}}</p>
+<div *ngIf="(!(errorMessage))" class="table-responsive">
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Registered date</th>
+            <th>Email</th>
+            <th>Balance</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of filteredUsers">
+            <td>{{user.name}}</td>
+            <td>{{user.age}}</td>
+            <td>{{user.registered}}</td> <!--There is an issue with the JSON formatted dates so the pipe does not work because dates are invalid -->
+            <!-- <td>{{user.registered | date:'dd-MM-yyyy HH:mm:ss'}}</td> -->
+            <td>{{user.email}}</td>
+            <td>{{user.balance.replace(',', '') | currency:'GBP'}}</td>
+        </tr>  
+    </tbody>
+    <tfoot class="">
+        <tr>
+            <td colspan="4">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-default">Search</span>
+                    </div>
+                    <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" [(ngModel)]="searchTerm" (keyup)="filterUsers()" >
+                  </div>
+            </td>
+            <td>
+                <button class="btn btn-primary" id="btnResetAllBalances" (click)="resetAllBalances()">Reset balances</button>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+</div>
+
